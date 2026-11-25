@@ -2,26 +2,23 @@ import React from 'react'
 import { Lightbulb, PenLine, Image, Sparkles } from 'lucide-react'
 
 /**
- * Task 3: WelcomeScreen Component
- * 
- * Features matching the reference design:
- * - Friendly waving robot mascot illustration with motion streaks and soft purple glow
- * - Main greeting headline: "How can I help you today?"
- * - Friendly prompt subtitle: "Ask anything — I'm here to help!"
- * - 4 prompt suggestion chips:
- *   1. Explain a topic (warm amber tint)
- *   2. Write something (soft purple tint)
- *   3. Give ideas (soft blue tint)
- *   4. Summarize (golden sparkles tint)
- * - Fully responsive: wraps smoothly on tablets and mobile screens
+ * Step 2: WelcomeScreen Component (Clickable Suggestion Chips)
+ *
+ * NEW: Accepts `onSendMessage` prop.
+ * When a suggestion chip is clicked, it fires `onSendMessage` with
+ * a full prompt text — which triggers the AI flow immediately,
+ * just like the user typed it themselves.
+ *
+ * Each suggestion chip now has a `prompt` field with a real sample question.
  */
-export default function WelcomeScreen() {
+export default function WelcomeScreen({ onSendMessage = () => {} }) {
   const suggestions = [
     {
       id: 'explain',
       icon: Lightbulb,
       iconColor: 'text-amber-500',
       label: 'Explain a topic',
+      prompt: 'Explain how the internet works in simple terms.',
       bgClass: 'bg-[#FFF9EA] hover:bg-[#FFF3D6] border-amber-200/50 text-amber-950',
     },
     {
@@ -29,6 +26,7 @@ export default function WelcomeScreen() {
       icon: PenLine,
       iconColor: 'text-purple-500',
       label: 'Write something',
+      prompt: 'Write a short poem about the beauty of learning to code.',
       bgClass: 'bg-[#F6F2FF] hover:bg-[#EFE7FE] border-purple-200/50 text-purple-950',
     },
     {
@@ -36,6 +34,7 @@ export default function WelcomeScreen() {
       icon: Image,
       iconColor: 'text-indigo-500',
       label: 'Give ideas',
+      prompt: 'Give me 5 creative side project ideas for a beginner React developer.',
       bgClass: 'bg-[#EEF4FF] hover:bg-[#E0ECFF] border-indigo-200/50 text-indigo-950',
     },
     {
@@ -43,6 +42,7 @@ export default function WelcomeScreen() {
       icon: Sparkles,
       iconColor: 'text-amber-500',
       label: 'Summarize',
+      prompt: 'Summarize the key benefits of using React for building web applications.',
       bgClass: 'bg-[#FFF6EC] hover:bg-[#FEEDD9] border-amber-200/50 text-amber-950',
     },
   ]
@@ -154,6 +154,7 @@ export default function WelcomeScreen() {
             <button
               key={item.id}
               type="button"
+              onClick={() => onSendMessage(item.prompt)}
               className={`
                 flex items-center gap-2 px-4 py-2.5 sm:px-4.5 sm:py-2.5 
                 rounded-2xl border text-xs sm:text-sm font-medium
